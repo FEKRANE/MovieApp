@@ -16,6 +16,11 @@
 		20AA35732B0E1837006B8C3B /* MovieAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35722B0E1837006B8C3B /* MovieAppTests.swift */; };
 		20AA357D2B0E1838006B8C3B /* MovieAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA357C2B0E1838006B8C3B /* MovieAppUITests.swift */; };
 		20AA357F2B0E1838006B8C3B /* MovieAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA357E2B0E1838006B8C3B /* MovieAppUITestsLaunchTests.swift */; };
+		20AA358F2B0E6A90006B8C3B /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA358E2B0E6A90006B8C3B /* HttpClient.swift */; };
+		20AA35922B0E6C23006B8C3B /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20AA35912B0E6C23006B8C3B /* RxSwift */; };
+		20AA35942B0F596C006B8C3B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35932B0F596C006B8C3B /* Enums.swift */; };
+		20AA35962B0F5F6E006B8C3B /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35952B0F5F6E006B8C3B /* URLSessionProtocol.swift */; };
+		20AA35982B0F625E006B8C3B /* NetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35972B0F625E006B8C3B /* NetworkManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +53,10 @@
 		20AA35782B0E1838006B8C3B /* MovieAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20AA357C2B0E1838006B8C3B /* MovieAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAppUITests.swift; sourceTree = "<group>"; };
 		20AA357E2B0E1838006B8C3B /* MovieAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		20AA358E2B0E6A90006B8C3B /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+		20AA35932B0F596C006B8C3B /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		20AA35952B0F5F6E006B8C3B /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		20AA35972B0F625E006B8C3B /* NetworkManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20AA35922B0E6C23006B8C3B /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +108,8 @@
 		20AA355B2B0E1835006B8C3B /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
+				20AA358C2B0E6A59006B8C3B /* Networking */,
+				20AA358B2B0E6A34006B8C3B /* Common */,
 				20AA355C2B0E1835006B8C3B /* MovieAppApp.swift */,
 				20AA355E2B0E1835006B8C3B /* ContentView.swift */,
 				20AA35602B0E1837006B8C3B /* Assets.xcassets */,
@@ -133,6 +145,32 @@
 			path = MovieAppUITests;
 			sourceTree = "<group>";
 		};
+		20AA358B2B0E6A34006B8C3B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				20AA35932B0F596C006B8C3B /* Enums.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		20AA358C2B0E6A59006B8C3B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				20AA358D2B0E6A77006B8C3B /* Protocols */,
+				20AA35972B0F625E006B8C3B /* NetworkManger.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		20AA358D2B0E6A77006B8C3B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				20AA358E2B0E6A90006B8C3B /* HttpClient.swift */,
+				20AA35952B0F5F6E006B8C3B /* URLSessionProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -149,6 +187,9 @@
 			dependencies = (
 			);
 			name = MovieApp;
+			packageProductDependencies = (
+				20AA35912B0E6C23006B8C3B /* RxSwift */,
+			);
 			productName = MovieApp;
 			productReference = 20AA35592B0E1835006B8C3B /* MovieApp.app */;
 			productType = "com.apple.product-type.application";
@@ -221,6 +262,9 @@
 				Base,
 			);
 			mainGroup = 20AA35502B0E1835006B8C3B;
+			packageReferences = (
+				20AA35902B0E6C23006B8C3B /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 20AA355A2B0E1835006B8C3B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -263,9 +307,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20AA35962B0F5F6E006B8C3B /* URLSessionProtocol.swift in Sources */,
+				20AA358F2B0E6A90006B8C3B /* HttpClient.swift in Sources */,
+				20AA35982B0F625E006B8C3B /* NetworkManger.swift in Sources */,
 				20AA35662B0E1837006B8C3B /* Persistence.swift in Sources */,
 				20AA355F2B0E1835006B8C3B /* ContentView.swift in Sources */,
 				20AA35692B0E1837006B8C3B /* MovieApp.xcdatamodeld in Sources */,
+				20AA35942B0F596C006B8C3B /* Enums.swift in Sources */,
 				20AA355D2B0E1835006B8C3B /* MovieAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,8 +484,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -465,8 +515,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -596,6 +648,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		20AA35902B0E6C23006B8C3B /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		20AA35912B0E6C23006B8C3B /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20AA35902B0E6C23006B8C3B /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		20AA35672B0E1837006B8C3B /* MovieApp.xcdatamodeld */ = {
