@@ -13,3 +13,12 @@ enum HttpMethod: String {
     var method: String { rawValue.uppercased() }
 }
 
+
+enum NetworkError: Error {
+    case requestFailed
+    case invalidResponse
+    case invalidStatusCode(Int)
+    case tokenExpired
+    case invalidURL(url: String)
+    case decodingFailed(error: Error)
+}

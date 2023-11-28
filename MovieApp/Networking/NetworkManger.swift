@@ -8,55 +8,48 @@
 import Foundation
 import RxSwift
 
+typealias HTTPHeaders = [String: String]
+
 class NetworkManager {
     
     //MARK: Properties
     static let sharedInstance = NetworkManager()
-    private var session: URLSessionProtocol!
-
-    enum ManagerErrors: Error {
-        case requestFailed
-        case invalidResponse
-        case invalidStatusCode(Int)
-        case tokenExpired
-        case invalidURL(url: String)
-    }
+    private let session: any URLSessionProtocol
     
     //MARK: Initializers
-    init(session: URLSessionProtocol? = nil) {
-        self.session = session ?? initializeSession()
+    init(session: some URLSessionProtocol) {
+        self.session = session
     }
     
+    init() {
+        self.session = Self.initializeSession()
+    }
     
-   private func request(from url: String, queryParams: [String: String]? = nil, httpMethod: HttpMethod = .get) -> Single<(HTTPURLResponse, Data)> {
-        
+   private func request(from url: String, queryParams: [String: String]? = nil, httpMethod: HttpMethod = .get, headers: HTTPHeaders) -> Single<Data> {
         return Single.create { single in
             
-            var urlComponents = URLComponents(string: url)!
-            
-            if let queryParams = queryParams{
-                urlComponents.queryItems = [URLQueryItem]()
-                for (key, value) in queryParams{
-                    urlComponents.queryItems?.append(URLQueryItem(name: key, value: value))
-                }
+            guard var request = self.prepareUrlRequest(url, with: queryParams, method: httpMethod) else {
+                single(.failure(NetworkError.invalidURL(url: url)))
+                return Disposables.create()
             }
             
-            var request = URLRequest(url: urlComponents.url!)
-            request.httpMethod = httpMethod.method
-            
+            headers.forEach({
+                request.setValue($0.value, forHTTPHeaderField: $0.key)
+            })
+                            
             let dataTask = self.session.makeDataTask(with: request) { data, response, error in
                 
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    single(.failure(ManagerErrors.requestFailed))
+                    single(.failure(NetworkError.requestFailed))
                     return
                 }
                 
                 if (200..<300) ~= httpResponse.statusCode {
-                    single(.success((httpResponse,data!)))
+                    single(.success(data!))
                 } else if httpResponse.statusCode == 401 {
-                    single(.failure(ManagerErrors.tokenExpired))
+                    single(.failure(NetworkError.tokenExpired))
                 } else {
-                    single(.failure(ManagerErrors.invalidResponse))
+                    single(.failure(NetworkError.invalidResponse))
                 }
             }
             
@@ -67,12 +60,13 @@ class NetworkManager {
             }
             
         }
+        .observe(on: MainScheduler.instance)
     }
 }
 
 //MARK: Helpers
 extension NetworkManager {
-    private func initializeSession()-> URLSessionProtocol {
+    private static func initializeSession()-> some URLSessionProtocol {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 720
         configuration.timeoutIntervalForResource = 720
@@ -83,15 +77,20 @@ extension NetworkManager {
         )
     }
     
-    private func prepareUrlRequest(url: String, queryParams: [String: String]?, httpMethod: HttpMethod) throws -> URLRequest {
+    private func prepareUrlRequest(_ url: String, with queryParams: [String: String]?, method httpMethod: HttpMethod) -> URLRequest? {
         guard var urlComponents = URLComponents(string: url) else {
-            throw ManagerErrors.invalidURL(url: url)
+            return nil
         }
         
         if let queryParams = queryParams {
             urlComponents.queryItems = [URLQueryItem]()
             for (key, value) in queryParams{
-                urlComponents.queryItems?.append(URLQueryItem(name: key, value: value))
+                urlComponents.queryItems?.append(
+                    URLQueryItem(
+                        name: key,
+                        value: value
+                    )
+                )
             }
         }
  
@@ -108,12 +107,14 @@ extension NetworkManager: HttpClient {
     func request(
         _ url: String,
         queryParams: [String : String]?,
-        httpMethod: HttpMethod
-    ) -> Single<(HTTPURLResponse, Data)> {
+        httpMethod: HttpMethod,
+        headers: HTTPHeaders
+    ) -> Single<Data> {
         return self.request(
             from: url,
             queryParams: queryParams,
-            httpMethod: httpMethod
+            httpMethod: httpMethod,
+            headers: headers
         )
     }
 }

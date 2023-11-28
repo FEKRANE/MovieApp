@@ -12,6 +12,24 @@ protocol HttpClient {
     func request(
         _ url: String,
         queryParams: [String: String]?,
-        httpMethod: HttpMethod
-    ) -> Single<(HTTPURLResponse, Data)>
+        httpMethod: HttpMethod,
+        headers: HTTPHeaders
+    ) -> Single<Data>
 }
+
+extension HttpClient {
+    func request(
+        _ url: String,
+        queryParams: [String: String]? = nil,
+        httpMethod: HttpMethod = .get,
+        headers: HTTPHeaders
+    ) -> Single<Data> {
+        request(
+            url,
+            queryParams: queryParams,
+            httpMethod: httpMethod,
+            headers: headers
+        )
+    }
+}
+

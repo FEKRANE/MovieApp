@@ -21,6 +21,9 @@
 		20AA35942B0F596C006B8C3B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35932B0F596C006B8C3B /* Enums.swift */; };
 		20AA35962B0F5F6E006B8C3B /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35952B0F5F6E006B8C3B /* URLSessionProtocol.swift */; };
 		20AA35982B0F625E006B8C3B /* NetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AA35972B0F625E006B8C3B /* NetworkManger.swift */; };
+		20C651902B1499850089E59C /* RefreshTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C6518F2B1499850089E59C /* RefreshTokenService.swift */; };
+		20C651942B14A1CE0089E59C /* APIConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C651932B14A1CE0089E59C /* APIConfiguration.swift */; };
+		20C651962B14DAC60089E59C /* GenericObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C651952B14DAC60089E59C /* GenericObjectMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +60,9 @@
 		20AA35932B0F596C006B8C3B /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		20AA35952B0F5F6E006B8C3B /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
 		20AA35972B0F625E006B8C3B /* NetworkManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManger.swift; sourceTree = "<group>"; };
+		20C6518F2B1499850089E59C /* RefreshTokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenService.swift; sourceTree = "<group>"; };
+		20C651932B14A1CE0089E59C /* APIConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfiguration.swift; sourceTree = "<group>"; };
+		20C651952B14DAC60089E59C /* GenericObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericObjectMapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,7 @@
 		20AA355B2B0E1835006B8C3B /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
+				20C6518C2B129D6B0089E59C /* Scenes */,
 				20AA358C2B0E6A59006B8C3B /* Networking */,
 				20AA358B2B0E6A34006B8C3B /* Common */,
 				20AA355C2B0E1835006B8C3B /* MovieAppApp.swift */,
@@ -149,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				20AA35932B0F596C006B8C3B /* Enums.swift */,
+				20C651932B14A1CE0089E59C /* APIConfiguration.swift */,
+				20C651952B14DAC60089E59C /* GenericObjectMapper.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -158,6 +167,7 @@
 			children = (
 				20AA358D2B0E6A77006B8C3B /* Protocols */,
 				20AA35972B0F625E006B8C3B /* NetworkManger.swift */,
+				20C6518F2B1499850089E59C /* RefreshTokenService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -169,6 +179,13 @@
 				20AA35952B0F5F6E006B8C3B /* URLSessionProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		20C6518C2B129D6B0089E59C /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,7 +326,10 @@
 			files = (
 				20AA35962B0F5F6E006B8C3B /* URLSessionProtocol.swift in Sources */,
 				20AA358F2B0E6A90006B8C3B /* HttpClient.swift in Sources */,
+				20C651942B14A1CE0089E59C /* APIConfiguration.swift in Sources */,
 				20AA35982B0F625E006B8C3B /* NetworkManger.swift in Sources */,
+				20C651902B1499850089E59C /* RefreshTokenService.swift in Sources */,
+				20C651962B14DAC60089E59C /* GenericObjectMapper.swift in Sources */,
 				20AA35662B0E1837006B8C3B /* Persistence.swift in Sources */,
 				20AA355F2B0E1835006B8C3B /* ContentView.swift in Sources */,
 				20AA35692B0E1837006B8C3B /* MovieApp.xcdatamodeld in Sources */,
