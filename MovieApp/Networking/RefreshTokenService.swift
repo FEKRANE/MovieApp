@@ -12,7 +12,7 @@ protocol TokenProvider {
     func tokenObservable() -> Observable<String>
 }
 
-class RefreshTokenService: TokenProvider {
+final class RefreshTokenService: TokenProvider {
     
     private struct AccessToken: Decodable {
         let accessToken: String

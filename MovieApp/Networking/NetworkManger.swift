@@ -10,7 +10,7 @@ import RxSwift
 
 typealias HTTPHeaders = [String: String]
 
-class NetworkManager {
+final class NetworkManager {
     
     //MARK: Properties
     static let sharedInstance = NetworkManager()
@@ -77,6 +77,7 @@ extension NetworkManager {
         )
     }
     
+    /// Build Request
     private func prepareUrlRequest(_ url: String, with queryParams: [String: String]?, method httpMethod: HttpMethod) -> URLRequest? {
         guard var urlComponents = URLComponents(string: url) else {
             return nil
