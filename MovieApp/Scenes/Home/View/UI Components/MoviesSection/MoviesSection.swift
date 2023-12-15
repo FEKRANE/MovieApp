@@ -31,7 +31,7 @@ struct MoviesSection: View {
                 })
             }
             
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal,showsIndicators: false) {
                 LazyHStack {
                     ForEach(0..<10){ _ in
                         MovieCell(selection: {})

@@ -26,7 +26,6 @@ struct HomeScreen: View {
                 }
             }
             .searchable(text: $movieSearch)
-            .preferredColorScheme(.dark)
         }
 }
 
