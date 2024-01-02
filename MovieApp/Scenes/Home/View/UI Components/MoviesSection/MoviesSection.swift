@@ -10,6 +10,8 @@ import SwiftUI
 
 struct MoviesSection: View {
     let title: String
+    @State private var isActive: Bool = false
+    
     var body: some View {
         VStack {
             HStack {
@@ -17,7 +19,7 @@ struct MoviesSection: View {
                     .font(.title2)
                 Spacer()
                 Button(action: {
-                    //TODO: Add action
+                    self.isActive = true
                 }, label: {
                     Text("See more")
                         .font(.caption)
@@ -29,12 +31,19 @@ struct MoviesSection: View {
                                 .stroke(Color(.red), lineWidth: 1)
                         )
                 })
+                .background(
+                    NavigationLink(
+                        destination: MovieListScreen().configureView(),
+                        isActive: $isActive,
+                        label: { EmptyView() }
+                    )
+                )
             }
             
             ScrollView(.horizontal,showsIndicators: false) {
                 LazyHStack {
                     ForEach(0..<10){ _ in
-                        MovieCell(selection: {})
+                        MovieCell(selection: {}, imageUrl: "")
                     }
                 }
             }

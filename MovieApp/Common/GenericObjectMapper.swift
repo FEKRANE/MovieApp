@@ -9,16 +9,16 @@ import Foundation
 import RxSwift
 
 struct GenericObjectMapper {
-    static func map<T>(data: Data) throws -> Single<T> where T: Decodable {
-        return .create { single in
-            do {
-                let content = try JSONDecoder().decode(T.self, from: data)
-                single(.success(content))
-            } catch {
-                single(.failure(NetworkError.decodingFailed(error: error)))
-            }
-                       
-            return Disposables.create()
+    static func map<T>(data: Data) throws -> T where T: Decodable {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            return try jsonDecoder.decode(T.self, from: data)
+        } catch DecodingError.typeMismatch {
+            let error = try? jsonDecoder.decode(ApiErrorDto.self, from: data)
+            throw NetworkError.customApiError(message: error?.statusMessage ?? "An unexpected error occurred.")
+        } catch {
+            throw NetworkError.decodingFailed(error: error)
         }
     }
 }

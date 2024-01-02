@@ -21,4 +21,29 @@ enum NetworkError: Error {
     case tokenExpired
     case invalidURL(url: String)
     case decodingFailed(error: Error)
+    case customApiError(message: String)
+    case unexpected
+}
+
+extension NetworkError {
+    public var description: String {
+        switch self {
+        case .requestFailed:
+            return "The network request failed."
+        case .invalidResponse:
+            return "Received an invalid response from the server."
+        case .invalidStatusCode(let statusCode):
+            return "Received an invalid status code: \(statusCode)."
+        case .tokenExpired:
+            return "The authentication token has expired."
+        case .invalidURL(let url):
+            return "Invalid URL: \(url)"
+        case .decodingFailed(let error):
+            return "Failed to decode response: \(error.localizedDescription)"
+        case .customApiError(let message):
+            return "Custom API error: \(message)"
+        case .unexpected:
+            return "An unexpected error occurred."
+        }
+    }
 }

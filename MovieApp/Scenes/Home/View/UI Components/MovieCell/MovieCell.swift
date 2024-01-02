@@ -9,16 +9,18 @@ import Foundation
 import SwiftUI
 
 struct MovieCell: View {
-    
+        
     let selection: () -> ()
+    let imageUrl: String
     
-    init(selection: @escaping () -> Void) {
-        self.selection = selection
-    }
+    init(selection: @escaping () -> (), imageUrl: String) {
+       self.selection = selection
+       self.imageUrl = imageUrl
+   }
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w400/7bWxAsNPv9CXHOhZbJVlj2KxgfP.jpg")) { poster in
+            AsyncImage(url: URL(string: imageUrl)) { poster in
                 poster
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -35,7 +37,7 @@ struct MovieCell: View {
 
 
 #Preview {
-    MovieCell(selection: {})
+    MovieCell(selection: {}, imageUrl: "https://image.tmdb.org/t/p/w400/7bWxAsNPv9CXHOhZbJVlj2KxgfP.jpg")
         .padding()
         .frame(height: 200)
 }

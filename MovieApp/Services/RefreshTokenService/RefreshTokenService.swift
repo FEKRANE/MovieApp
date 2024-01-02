@@ -26,9 +26,9 @@ final class RefreshTokenService: TokenProvider {
     
     //MARK: Properties
     private let apiManager: any HttpClient
-    private let token = ReplaySubject<String>.create(bufferSize: 1)
+    private let token = BehaviorSubject<String>(value: APIConfiguration.refreshToken.apiKey)
     private let disposeBag = DisposeBag()
-    private let refreshThreshold: Int = 60
+    private let refreshThreshold: Int = 120
     private let headers = [
         "accept": "application/json",
         "Authorization": "Bearer \(APIConfiguration.refreshToken.apiKey)"
@@ -41,7 +41,7 @@ final class RefreshTokenService: TokenProvider {
             .flatMapLatest { [headers] _ -> Single<AccessToken> in
                 let url = APIConfiguration.refreshToken.endpoint
                 return apiManager.request(url, headers: headers)
-                    .flatMap( GenericObjectMapper.map )
+                    .map(GenericObjectMapper.map)
                     .retry(3)
             }
             .subscribe(
@@ -52,11 +52,12 @@ final class RefreshTokenService: TokenProvider {
                     //TODO: Log error
                     self.token.onNext(APIConfiguration.refreshToken.apiKey)
                 })
-            .dispose()
+            .disposed(by: disposeBag)
     }
     
     func tokenObservable() -> Observable<String> {
-        token.asObservable()
+        token.take(1)
+            .asObservable()
     }
     
 }

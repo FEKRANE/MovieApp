@@ -15,6 +15,7 @@ protocol Configuration {
 
 enum APIConfiguration {
     case refreshToken
+    case upcommingMovies
 }
 
 extension APIConfiguration: Configuration {
@@ -24,13 +25,15 @@ extension APIConfiguration: Configuration {
     }
     
     var apiKey: String {
-        "3d7810ad21cf0e5b82b0ccdebdc9d2d1"
+        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZDE4NDk3ODlhNTY2MmYzMjQ3YWQxNGJhYzY0NDhhZSIsInN1YiI6IjY0NmEwYjllMDA2YjAxMDEwNThhOTVjZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WS4IFP2_rML53IE_BS1S6plMG0ZwQ2bMK9g2rgeYsUU"
     }
     
     var endpoint: String {
         switch self {
         case .refreshToken:
             return baseURL.appending("authentication/guest_session/new")
+        case .upcommingMovies:
+            return baseURL.appending("discover/movie")
         }
     }
 }
