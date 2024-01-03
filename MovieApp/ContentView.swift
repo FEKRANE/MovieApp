@@ -33,14 +33,7 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gearshape")
                 }
         }
-        .accentColor(Color(.red))
-        .onAppear {
-            let appearance = UITabBarAppearance()
-            appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-            appearance.backgroundColor = UIColor(Color.tabBar)
-            UITabBar.appearance().standardAppearance = appearance
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
+        .accentColor(Color(.lightGray))
         .preferredColorScheme(.dark)
     }
     

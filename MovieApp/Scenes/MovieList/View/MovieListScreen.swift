@@ -25,15 +25,15 @@ struct MovieListScreen: View {
                         poster
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
+                            .frame(width: 60)
                     } placeholder: {
                         ProgressView()
-                            .frame(width: 100)
+                            .frame(width: 60)
                     }
                     
                     VStack(alignment: .leading) {
                         Text(movie.title)
-                            .font(.headline)
+                            .font(.subheadline)
                         Text(movie.releaseDate)
                             .font(.caption)
                             .lineLimit(3)
@@ -41,6 +41,8 @@ struct MovieListScreen: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity)
+        .listStyle(GroupedListStyle())
         .onAppear {
             let request = MovieList.Request()
             interactor?.fetchMovies(request: request)

@@ -23,12 +23,12 @@ struct MoviesSection: View {
                 }, label: {
                     Text("See more")
                         .font(.caption)
-                        .foregroundStyle(Color(.red))
+                        .foregroundStyle(Color(.lightGray))
                         .padding(.horizontal,8)
                         .padding(.vertical,3)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color(.red), lineWidth: 1)
+                                .stroke(Color(.lightGray), lineWidth: 1)
                         )
                 })
                 .background(

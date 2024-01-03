@@ -14,21 +14,25 @@ protocol HomeDisplayLogic {
 struct HomeScreen: View {
     var interactor: (any HomeBusinessLogic)?
     @State private var movieSearch = ""
-    @ObservedObject private var viewModel = HomeModel.ViewModel()
+    @ObservedObject  var viewModel = HomeModel.ViewModel()
     var body: some View {
         NavigationView {
             ZStack {
                 Color(.background)
                     .ignoresSafeArea(.all)
-                VStack {
-                    TopRatedCarousel()
-                    ForEach(viewModel.sections, id: \.self) { title in
-                        MoviesSection(title: title)
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        TopRatedCarousel()
+                            .frame(height: 250)
+                        ForEach(viewModel.sections, id: \.self) { title in
+                            MoviesSection(title: title)
+                                .frame(height: 200)
+                        }
+                        Spacer()
                     }
-                    Spacer()
-                }
-                .navigationTitle("What would you like to watch?")
+                    .navigationTitle("What would you like to watch?")
                 .navigationBarTitleDisplayMode(.inline)
+                }
             }  
             .onAppear {
                 interactor?.getSections()
@@ -47,6 +51,12 @@ extension HomeScreen: HomeDisplayLogic {
 }
 
 #Preview {
-    HomeScreen()
+    let model = HomeModel.ViewModel()
+    model.sections = [
+        "Upcomming Movies",
+        "Popular Movies",
+        "Latest Tv Shows"
+    ]
+    return HomeScreen(viewModel: model)
 }
 

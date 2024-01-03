@@ -19,7 +19,8 @@ extension HomeInteractor: HomeBusinessLogic {
     func getSections() {
         let sections = [
             "Upcomming Movies",
-            "Popular Movies"
+            "Popular Movies",
+            "Latest Tv Shows"
         ]
         presenter?.showSections(sections)
     }
