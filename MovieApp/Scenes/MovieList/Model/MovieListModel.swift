@@ -10,12 +10,15 @@ import Foundation
 enum MovieList {
     struct Request {
         let page: Int
+        let movieCategory: MovieCategory
         
-        init(page: Int = 1) {
+        init(page: Int = 1, movieCategory: MovieCategory) {
             self.page = page
+            self.movieCategory = movieCategory
         }
+        
     }
-    
+
     struct Response {
         let movieList: MovieListResponse
     }
@@ -25,7 +28,7 @@ enum MovieList {
         @Published var totalPages: Int = 0
         @Published var page: Int = 1
         
-        struct Movie: Identifiable {
+        struct Movie: Hashable {
             let id = UUID()
             let poster: URL
             let releaseDate: String

@@ -23,7 +23,7 @@ final class MovieListWorker {
         self.tokenProvider = tokenProvider
     }
     
-   private func retrieveMovies(request: MovieListRequest) -> Single<MovieListResponse> {
+    private func retrieveMovies(request: MovieListRequest, endpoint: String) -> Single<MovieListResponse> {
          tokenProvider
             .tokenObservable()
             .map { [ "Authorization": "Bearer \($0)"] }
@@ -39,7 +39,15 @@ final class MovieListWorker {
 
 extension MovieListWorker: MovieListWorkerProtocol {
     func getMovieList(request: MovieListRequest, completion: @escaping (Result<MovieListResponse, NetworkError>) -> Void) {
-        retrieveMovies(request: request)
+        let endpoint = switch request.movieCategory {
+        case .popular:
+            APIConfiguration.popularMovies.endpoint
+        case .topRatedMovies:
+            APIConfiguration.topRatedMovies.endpoint
+        case .upcoming:
+            APIConfiguration.upcommingMovies.endpoint
+        }
+        retrieveMovies(request: request, endpoint: endpoint)
             .subscribe(
                 onSuccess: { movieList in
                     completion(.success(movieList))

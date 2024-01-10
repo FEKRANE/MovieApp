@@ -17,10 +17,10 @@ final class HomeInteractor {
 
 extension HomeInteractor: HomeBusinessLogic {
     func getSections() {
-        let sections = [
-            "Upcomming Movies",
-            "Popular Movies",
-            "Latest Tv Shows"
+        let sections : [MovieCategory] = [
+            .upcoming,
+            .popular,
+            .topRatedMovies,
         ]
         presenter?.showSections(sections)
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HomePresentationLogic {
-  func showSections(_ response: [String])
+    func showSections(_ response: [MovieCategory])
 }
 
 final class HomePresenter {
@@ -16,7 +16,7 @@ final class HomePresenter {
 }
 
 extension HomePresenter: HomePresentationLogic {
-    func showSections(_ response: [String]) {
+    func showSections(_ response: [MovieCategory]) {
         view?.displaySection(sections: response)
     }
 }

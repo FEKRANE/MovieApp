@@ -16,6 +16,8 @@ protocol Configuration {
 enum APIConfiguration {
     case refreshToken
     case upcommingMovies
+    case topRatedMovies
+    case popularMovies
 }
 
 extension APIConfiguration: Configuration {
@@ -33,7 +35,11 @@ extension APIConfiguration: Configuration {
         case .refreshToken:
             return baseURL.appending("authentication/guest_session/new")
         case .upcommingMovies:
-            return baseURL.appending("discover/movie")
+            return baseURL.appending("movie/upcoming")
+        case .topRatedMovies:
+            return baseURL.appending("movie/top_rated")
+        case .popularMovies:
+            return baseURL.appending("movie/popular")
         }
     }
 }

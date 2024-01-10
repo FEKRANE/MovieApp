@@ -47,3 +47,20 @@ extension NetworkError {
         }
     }
 }
+
+enum MovieCategory {
+    case topRatedMovies
+    case popular
+    case upcoming
+    
+    var title: String {
+        switch self {
+        case .topRatedMovies:
+            return "Top Rated Movies"
+        case .popular:
+            return "Popular Movies"
+        case .upcoming:
+            return "Upcoming Movies"
+        }
+    }
+}

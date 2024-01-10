@@ -12,7 +12,8 @@ struct MovieListRequest: Encodable {
     let language: String = "en-US"
     let page: Int
     let sortBy: String = "popularity.desc"
-
+    let movieCategory: MovieCategory
+    
     private enum CodingKeys: String, CodingKey {
         case includeAdult = "include_adult"
         case language

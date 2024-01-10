@@ -14,9 +14,14 @@ protocol MovieListDisplayLogic {
 struct MovieListScreen: View {
     @ObservedObject private var viewModel = MovieList.ViewModel()
     var interactor: (any MovieListBusinessLogic)?
-
+    var movieCategory: MovieCategory
+    
+    init(movieCategory: MovieCategory = .topRatedMovies) {
+        self.movieCategory = movieCategory
+    }
+    
     var body: some View {
-        List(viewModel.movies) { movie in
+        List(viewModel.movies, id: \.self) { movie in
             NavigationLink {
                 //TODO: Redirect to movieDetails view
             } label: {
@@ -44,7 +49,7 @@ struct MovieListScreen: View {
         .frame(maxWidth: .infinity)
         .listStyle(GroupedListStyle())
         .onAppear {
-            let request = MovieList.Request()
+            let request = MovieList.Request(movieCategory: movieCategory)
             interactor?.fetchMovies(request: request)
         }
     }

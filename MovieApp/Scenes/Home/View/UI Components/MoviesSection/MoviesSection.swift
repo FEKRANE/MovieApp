@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct MoviesSection: View {
-    let title: String
+    let categorie: MovieCategory
     @State private var isActive: Bool = false
     
     var body: some View {
         VStack {
             HStack {
-                Text(title)
+                Text(categorie.title)
                     .font(.title2)
                 Spacer()
                 Button(action: {
@@ -33,9 +33,13 @@ struct MoviesSection: View {
                 })
                 .background(
                     NavigationLink(
-                        destination: MovieListScreen().configureView(),
+                        destination: MovieListScreen(
+                            movieCategory: categorie
+                        ).configureView(),
                         isActive: $isActive,
-                        label: { EmptyView() }
+                        label: {
+                            EmptyView()
+                        }
                     )
                 )
             }
@@ -53,6 +57,6 @@ struct MoviesSection: View {
 
 
 #Preview {
-    MoviesSection(title: "Upcoming movies")
+    MoviesSection(categorie: .topRatedMovies)
         .frame(height: 220)
 }

@@ -8,12 +8,12 @@
 import Foundation
 
 protocol MovieListBusinessLogic {
-  func fetchMovies(request: MovieList.Request)
+    func fetchMovies(request: MovieList.Request)
 }
 
 final class MovieListInteractor {
-  var presenter: (any MovieListPresentationLogic)?
-  private var worker: (any MovieListWorkerProtocol)?
+    var presenter: (any MovieListPresentationLogic)?
+    private var worker: (any MovieListWorkerProtocol)?
     init(worker: MovieListWorkerProtocol = MovieListWorker()) {
         self.worker = worker
     }
@@ -21,7 +21,10 @@ final class MovieListInteractor {
 
 extension MovieListInteractor: MovieListBusinessLogic {
     func fetchMovies(request: MovieList.Request) {
-        let requestModel = MovieListRequest(page: request.page)
+        let requestModel = MovieListRequest(
+            page: request.page,
+            movieCategory: .topRatedMovies
+        )
         worker?.getMovieList(request: requestModel) { [weak self] result in
             switch result {
             case .success(let data):

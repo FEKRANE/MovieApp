@@ -7,20 +7,40 @@
 
 import SwiftUI
 
+extension TopRatedCarousel: MovieListDisplayLogic {
+    func displayMovies(viewModel: MovieList.ViewModel) {
+        self.viewModel.movies = viewModel.movies
+    }
+    
+    func fetchTopRatedMovies() {
+        let request = MovieList.Request(movieCategory: .topRatedMovies)
+        interactor?.fetchMovies(request: request)
+    }
+}
+
 struct TopRatedCarousel: View {
     @State private var currentIndex: Int = 0
     @GestureState private var dragOffset: CGFloat = 0
-    
+    var interactor: MovieListInteractor?
+    @ObservedObject var viewModel = MovieList.ViewModel()
     var body: some View {
         let cardPadding = 50.0
         VStack {
             GeometryReader { geometry in
-                Carousel(padding: cardPadding,items: Array(1..<5)) { item in
-                    CarouselItem(geometry: geometry, cardPadding: cardPadding)
+                Carousel(padding: cardPadding, items: viewModel.movies) { movie in
+                    CarouselItem(
+                        geometry: geometry,
+                        cardPadding: cardPadding,
+                        imageUrl: movie.poster
+                    )
                 }
             }
             Spacer()
-        }.padding(.vertical)
+        }
+        .padding(.vertical)
+        .onAppear {
+            fetchTopRatedMovies()
+        }
     }
 }
 
@@ -33,11 +53,12 @@ struct TopRatedCarousel: View {
 fileprivate struct CarouselItem: View {
     let geometry: GeometryProxy
     let cardPadding: CGFloat
+    let imageUrl: URL
     
     var body: some View {
         let cardWidth = geometry.size.width - (cardPadding * 2)
         let cardHeight = geometry.size.height
-        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w400/7bWxAsNPv9CXHOhZbJVlj2KxgfP.jpg")) { poster in
+        AsyncImage(url: imageUrl) { poster in
             poster
                 .resizable()
                 .aspectRatio(contentMode: .fill)

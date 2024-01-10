@@ -9,6 +9,6 @@ import Foundation
 
 enum HomeModel {
     class ViewModel: ObservableObject {
-        @Published var sections: [String] = []
+        @Published var sections: [MovieCategory] = []
     }
 }

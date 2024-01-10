@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol HomeDisplayLogic {
-    func displaySection(sections: [String])
+    func displaySection(sections: [MovieCategory])
 }
 
 struct HomeScreen: View {
@@ -22,10 +22,10 @@ struct HomeScreen: View {
                     .ignoresSafeArea(.all)
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        TopRatedCarousel()
+                        TopRatedCarousel().configureView()
                             .frame(height: 250)
-                        ForEach(viewModel.sections, id: \.self) { title in
-                            MoviesSection(title: title)
+                        ForEach(viewModel.sections, id: \.self) { section in
+                            MoviesSection(categorie: section)
                                 .frame(height: 200)
                         }
                         Spacer()
@@ -43,7 +43,7 @@ struct HomeScreen: View {
 }
 
 extension HomeScreen: HomeDisplayLogic {
-    func displaySection(sections: [String]) {
+    func displaySection(sections: [MovieCategory]) {
         viewModel.sections = sections
     }
     
@@ -53,9 +53,9 @@ extension HomeScreen: HomeDisplayLogic {
 #Preview {
     let model = HomeModel.ViewModel()
     model.sections = [
-        "Upcomming Movies",
-        "Popular Movies",
-        "Latest Tv Shows"
+        .upcoming,
+        .popular,
+        .topRatedMovies
     ]
     return HomeScreen(viewModel: model)
 }
