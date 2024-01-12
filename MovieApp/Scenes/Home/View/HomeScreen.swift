@@ -7,14 +7,8 @@
 
 import SwiftUI
 
-protocol HomeDisplayLogic {
-    func displaySection(sections: [MovieCategory])
-}
-
 struct HomeScreen: View {
-    var interactor: (any HomeBusinessLogic)?
     @State private var movieSearch = ""
-    @ObservedObject  var viewModel = HomeModel.ViewModel()
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,41 +16,23 @@ struct HomeScreen: View {
                     .ignoresSafeArea(.all)
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        TopRatedCarousel().configureView()
-                            .frame(height: 250)
-                        ForEach(viewModel.sections, id: \.self) { section in
-                            MoviesSection(categorie: section)
-                                .frame(height: 200)
+                        ForEach(MovieCategory.allCases, id: \.self) { section in
+                        MoviesSection(categorie: section).configureView()
+                                .frame(height: 250)
                         }
                         Spacer()
                     }
                     .navigationTitle("What would you like to watch?")
                 .navigationBarTitleDisplayMode(.inline)
                 }
-            }  
-            .onAppear {
-                interactor?.getSections()
             }
             .searchable(text: $movieSearch)
         }
     }
 }
-
-extension HomeScreen: HomeDisplayLogic {
-    func displaySection(sections: [MovieCategory]) {
-        viewModel.sections = sections
-    }
     
-    
-}
 
 #Preview {
-    let model = HomeModel.ViewModel()
-    model.sections = [
-        .upcoming,
-        .popular,
-        .topRatedMovies
-    ]
-    return HomeScreen(viewModel: model)
+    return HomeScreen()
 }
 

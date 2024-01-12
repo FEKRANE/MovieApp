@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            HomeScreen().configureView()
+            HomeScreen()
                 .tabItem {
                     
                     Label("Home", systemImage: "house")

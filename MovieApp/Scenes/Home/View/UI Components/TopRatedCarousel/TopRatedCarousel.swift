@@ -7,27 +7,15 @@
 
 import SwiftUI
 
-extension TopRatedCarousel: MovieListDisplayLogic {
-    func displayMovies(viewModel: MovieList.ViewModel) {
-        self.viewModel.movies = viewModel.movies
-    }
-    
-    func fetchTopRatedMovies() {
-        let request = MovieList.Request(movieCategory: .topRatedMovies)
-        interactor?.fetchMovies(request: request)
-    }
-}
-
-struct TopRatedCarousel: View {
+struct MovieCarousel: View {
     @State private var currentIndex: Int = 0
     @GestureState private var dragOffset: CGFloat = 0
-    var interactor: MovieListInteractor?
-    @ObservedObject var viewModel = MovieList.ViewModel()
+    var movies: [MovieList.ViewModel.Movie]
     var body: some View {
-        let cardPadding = 50.0
+        let cardPadding = 60.0
         VStack {
             GeometryReader { geometry in
-                Carousel(padding: cardPadding, items: viewModel.movies) { movie in
+                Carousel(padding: cardPadding, items: movies) { movie in
                     CarouselItem(
                         geometry: geometry,
                         cardPadding: cardPadding,
@@ -38,19 +26,24 @@ struct TopRatedCarousel: View {
             Spacer()
         }
         .padding(.vertical)
-        .onAppear {
-            fetchTopRatedMovies()
-        }
     }
 }
 
 
 #Preview {
-    TopRatedCarousel()
+    let movies : [MovieList.ViewModel.Movie] = [
+        .init(poster: URL(string: "https://image.tmdb.org/t/p/w400/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")!, releaseDate: "1972-03-14", title: "he Godxfather"),
+        .init(poster: URL(string: "https://image.tmdb.org/t/p/w400/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")!, releaseDate: "1972-03-14", title: "he Godfather"),
+        .init(poster: URL(string: "https://image.tmdb.org/t/p/w400/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")!, releaseDate: "1972-03-14", title: "he Godfather"),
+        .init(poster: URL(string: "https://image.tmdb.org/t/p/w400/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")!, releaseDate: "1972-03-14", title: "he Godfather")
+        
+    ]
+           
+    return MovieCarousel(movies: movies)
         .frame(height: 300)
 }
 
-fileprivate struct CarouselItem: View {
+ struct CarouselItem: View {
     let geometry: GeometryProxy
     let cardPadding: CGFloat
     let imageUrl: URL
@@ -61,7 +54,7 @@ fileprivate struct CarouselItem: View {
         AsyncImage(url: imageUrl) { poster in
             poster
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+//                .aspectRatio(contentMode: .fill)
         } placeholder: {
             ProgressView()
         }

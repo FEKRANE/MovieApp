@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol HomePresentationLogic {
-    func showSections(_ response: [MovieCategory])
-}
-
-final class HomePresenter {
-  var view: (any HomeDisplayLogic)?
-}
-
-extension HomePresenter: HomePresentationLogic {
-    func showSections(_ response: [MovieCategory]) {
-        view?.displaySection(sections: response)
-    }
-}
+//protocol HomePresentationLogic {
+//    func showSections(_ response: [MovieCategory])
+//}
+//
+//final class HomePresenter {
+//  var view: (any HomeDisplayLogic)?
+//}
+//
+//extension HomePresenter: HomePresentationLogic {
+//    func showSections(_ response: [MovieCategory]) {
+//        view?.displaySection(sections: response)
+//    }
+//}

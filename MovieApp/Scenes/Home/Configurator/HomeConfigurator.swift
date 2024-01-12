@@ -9,15 +9,15 @@ import Foundation
 
 import SwiftUI
 
-extension HomeScreen {
-  func configureView() -> some View {
-    var view = self
-    let interactor = HomeInteractor()
-    let presenter = HomePresenter()
-    view.interactor = interactor
-    interactor.presenter = presenter
-    presenter.view = view
-
-    return view
-  }
-}
+//extension HomeScreen {
+//  func configureView() -> some View {
+//    var view = self
+//    let interactor = HomeInteractor()
+//    let presenter = HomePresenter()
+//    view.interactor = interactor
+//    interactor.presenter = presenter
+//    presenter.view = view
+//
+//    return view
+//  }
+//}

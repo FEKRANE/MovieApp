@@ -8,9 +8,49 @@
 import Foundation
 import SwiftUI
 
+extension MoviesSection: MovieListDisplayLogic {
+    func displayMovies(viewModel: MovieList.ViewModel) {
+        self.viewModel.movies = viewModel.movies
+    }
+    
+    func fetchMovies() {
+        let request = MovieList.Request(movieCategory: categorie)
+        interactor?.fetchMovies(request: request)
+    }
+}
+
 struct MoviesSection: View {
     let categorie: MovieCategory
+    var interactor: (any MovieListBusinessLogic)?
+    @ObservedObject var viewModel = MovieList.ViewModel()
+    
+    var body: some View {
+        Group {
+            if categorie == .topRatedMovies {
+                MovieCarousel(movies: viewModel.movies)
+            } else {
+                MovieListView(
+                    movies: viewModel.movies,
+                    categorie: categorie
+                )
+            }
+        }
+        .onAppear {
+            fetchMovies()
+        }
+    }
+}
+
+
+#Preview {
+    MoviesSection(categorie: .topRatedMovies)
+        .frame(height: 220)
+}
+
+struct MovieListView: View {
     @State private var isActive: Bool = false
+    var movies: [MovieList.ViewModel.Movie]
+    var categorie: MovieCategory
     
     var body: some View {
         VStack {
@@ -45,18 +85,12 @@ struct MoviesSection: View {
             }
             
             ScrollView(.horizontal,showsIndicators: false) {
-                LazyHStack {
-                    ForEach(0..<10){ _ in
-                        MovieCell(selection: {}, imageUrl: "")
+                LazyHStack(spacing: 12) {
+                    ForEach(movies,id: \.self){ movie in
+                        MovieCell(selection: {}, imageUrl: movie.poster)
                     }
                 }
             }
         }.padding()
     }
-}
-
-
-#Preview {
-    MoviesSection(categorie: .topRatedMovies)
-        .frame(height: 220)
 }

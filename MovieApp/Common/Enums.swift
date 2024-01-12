@@ -48,7 +48,7 @@ extension NetworkError {
     }
 }
 
-enum MovieCategory {
+enum MovieCategory: CaseIterable {
     case topRatedMovies
     case popular
     case upcoming

@@ -29,7 +29,7 @@ final class MovieListWorker {
             .map { [ "Authorization": "Bearer \($0)"] }
             .flatMap { [httpClient] headers -> Single<MovieListResponse> in
                return httpClient.request(
-                    APIConfiguration.upcommingMovies.endpoint,
+                    endpoint,
                     queryParams: request.asDictionary(),
                     headers: headers
                 ).map(GenericObjectMapper.map)

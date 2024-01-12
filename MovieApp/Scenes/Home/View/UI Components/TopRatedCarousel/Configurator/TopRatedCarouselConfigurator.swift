@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-extension TopRatedCarousel {
-    func configureView() -> some View {
-        var view = self
-        let interactor = MovieListInteractor()
-        let presenter = MovieListPresenter()
-        view.interactor = interactor
-        interactor.presenter = presenter
-        presenter.view = view
-        
-        return view
-    }
-}
+//extension MovieCarousel {
+//    func configureView() -> some View {
+//        var view = self
+//        let interactor = MovieListInteractor()
+//        let presenter = MovieListPresenter()
+//        view.interactor = interactor
+//        interactor.presenter = presenter
+//        presenter.view = view
+//        
+//        return view
+//    }
+//}

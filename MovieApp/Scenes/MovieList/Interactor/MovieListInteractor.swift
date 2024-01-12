@@ -23,7 +23,7 @@ extension MovieListInteractor: MovieListBusinessLogic {
     func fetchMovies(request: MovieList.Request) {
         let requestModel = MovieListRequest(
             page: request.page,
-            movieCategory: .topRatedMovies
+            movieCategory: request.movieCategory
         )
         worker?.getMovieList(request: requestModel) { [weak self] result in
             switch result {

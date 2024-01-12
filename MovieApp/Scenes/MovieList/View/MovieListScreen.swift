@@ -56,6 +56,11 @@ struct MovieListScreen: View {
 }
 
 extension MovieListScreen: MovieListDisplayLogic {
+    func displayMovies(viewModel: [MovieList.ViewModel.Movie]) {
+        self.viewModel.movies = viewModel
+
+    }
+    
     func displayMovies(viewModel: MovieList.ViewModel) {
         self.viewModel.movies = viewModel.movies
         self.viewModel.totalPages = viewModel.totalPages

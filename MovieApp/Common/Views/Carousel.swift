@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct Carousel<Content: View, T: Hashable>: View {
     private var content: (T) -> Content
@@ -17,7 +18,7 @@ struct Carousel<Content: View, T: Hashable>: View {
     var body: some View {
         GeometryReader { geometry in
             let cardWidth = geometry.size.width - (padding * 2)
-            LazyHStack(spacing: 0) {
+            HStack(spacing: 0) {
                 let enumeratedItems = list.enumerated().map { $0 }
                 ForEach(enumeratedItems, id: \.element) { index, item  in
                     content(item)
