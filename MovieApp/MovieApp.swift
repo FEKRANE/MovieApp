@@ -10,6 +10,8 @@ import netfox
 
 @main
 struct MovieApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     init() {
         NFX.sharedInstance().start()
         NFX.sharedInstance().setGesture(.shake)

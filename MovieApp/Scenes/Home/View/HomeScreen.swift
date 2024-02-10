@@ -17,7 +17,7 @@ struct HomeScreen: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         ForEach(MovieCategory.allCases, id: \.self) { section in
-                        MoviesSection(categorie: section).configureView()
+                            MoviesSection(categorie: section, viewModel: .init()).configureView()
                                 .frame(height: 250)
                         }
                         Spacer()

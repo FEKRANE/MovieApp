@@ -22,8 +22,8 @@ extension MoviesSection: MovieListDisplayLogic {
 struct MoviesSection: View {
     let categorie: MovieCategory
     var interactor: (any MovieListBusinessLogic)?
-    @ObservedObject var viewModel = MovieList.ViewModel()
-    
+    @ObservedObject var viewModel : MovieList.ViewModel
+
     var body: some View {
         Group {
             if categorie == .topRatedMovies {
@@ -43,15 +43,15 @@ struct MoviesSection: View {
 
 
 #Preview {
-    MoviesSection(categorie: .topRatedMovies)
+    MoviesSection(categorie: .topRatedMovies, viewModel: .init())
         .frame(height: 220)
 }
 
 struct MovieListView: View {
-    @State private var isActive: Bool = false
     var movies: [MovieList.ViewModel.Movie]
     var categorie: MovieCategory
-    
+    @EnvironmentObject var coordinator: MainCoordinator
+
     var body: some View {
         VStack {
             HStack {
@@ -59,7 +59,7 @@ struct MovieListView: View {
                     .font(.title2)
                 Spacer()
                 Button(action: {
-                    self.isActive = true
+                    coordinator.show(Route.movieList(category: categorie))
                 }, label: {
                     Text("See more")
                         .font(.caption)
@@ -71,17 +71,6 @@ struct MovieListView: View {
                                 .stroke(Color(.lightGray), lineWidth: 1)
                         )
                 })
-                .background(
-                    NavigationLink(
-                        destination: MovieListScreen(
-                            movieCategory: categorie
-                        ).configureView(),
-                        isActive: $isActive,
-                        label: {
-                            EmptyView()
-                        }
-                    )
-                )
             }
             
             ScrollView(.horizontal,showsIndicators: false) {
