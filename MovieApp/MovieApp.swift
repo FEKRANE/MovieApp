@@ -8,7 +8,6 @@
 import SwiftUI
 import netfox
 
-@main
 struct MovieApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
@@ -19,6 +18,27 @@ struct MovieApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }
+    }
+}
+
+@main
+struct MainEntryPoint {
+    static func main() {
+        guard isProduction() else {
+            TestApp.main()
+            return
+        }
+        MovieApp.main()
+    }
+    private static func isProduction() -> Bool {
+        return NSClassFromString("XCTestCase") == nil
+    }
+}
+
+struct TestApp: App {
+    var body: some Scene {
+        WindowGroup {
         }
     }
 }

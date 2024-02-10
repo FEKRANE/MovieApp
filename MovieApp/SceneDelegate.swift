@@ -16,7 +16,6 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let navigationController = UINavigationController()
-        navigationController.setNavigationBarHidden(true, animated: false)
         window = UIWindow(windowScene: windowScene)
         let router = NavigationRouter(navigationController: navigationController)
         coordinator = MainCoordinator(router: router)
