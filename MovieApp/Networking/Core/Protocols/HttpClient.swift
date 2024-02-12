@@ -13,7 +13,7 @@ protocol HttpClient {
         _ url: String,
         queryParams: [String: String]?,
         httpMethod: HttpMethod,
-        headers: HTTPHeaders
+        headers: HTTPHeaders?
     ) -> Single<Data>
 }
 
@@ -22,7 +22,7 @@ extension HttpClient {
         _ url: String,
         queryParams: [String: String]? = nil,
         httpMethod: HttpMethod = .get,
-        headers: HTTPHeaders
+        headers: HTTPHeaders? = nil
     ) -> Single<Data> {
         request(
             url,

@@ -55,12 +55,9 @@ enum MovieCategory: CaseIterable {
     
     var title: String {
         switch self {
-        case .topRatedMovies:
-            return "Top Rated Movies"
-        case .popular:
-            return "Popular Movies"
-        case .upcoming:
-            return "Upcoming Movies"
+        case .topRatedMovies: "Top Rated Movies"
+        case .popular: "Popular Movies"
+        case .upcoming: "Upcoming Movies"
         }
     }
 }

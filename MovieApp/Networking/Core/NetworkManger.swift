@@ -25,7 +25,7 @@ final class NetworkManager {
         self.session = Self.initializeSession()
     }
     
-   private func request(from url: String, queryParams: [String: String]? = nil, httpMethod: HttpMethod = .get, headers: HTTPHeaders) -> Single<Data> {
+   private func request(from url: String, queryParams: [String: String]? = nil, httpMethod: HttpMethod = .get, headers: HTTPHeaders? = nil) -> Single<Data> {
         return Single.create { single in
             
             guard var request = self.prepareUrlRequest(url, with: queryParams, method: httpMethod) else {
@@ -33,7 +33,7 @@ final class NetworkManager {
                 return Disposables.create()
             }
             
-            headers.forEach({
+            headers?.forEach({
                 request.setValue($0.value, forHTTPHeaderField: $0.key)
             })
                             
@@ -109,7 +109,7 @@ extension NetworkManager: HttpClient {
         _ url: String,
         queryParams: [String : String]?,
         httpMethod: HttpMethod,
-        headers: HTTPHeaders
+        headers: HTTPHeaders?
     ) -> Single<Data> {
         return self.request(
             from: url,
