@@ -21,11 +21,10 @@ enum APIConfiguration {
 }
 
 extension APIConfiguration: Configuration {
-    
     var baseURL: String {
         "https://api.themoviedb.org/3/"
     }
-    
+
     var apiKey: String {
         "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZDE4NDk3ODlhNTY2MmYzMjQ3YWQxNGJhYzY0NDhhZSIsInN1YiI6IjY0NmEwYjllMDA2YjAxMDEwNThhOTVjZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WS4IFP2_rML53IE_BS1S6plMG0ZwQ2bMK9g2rgeYsUU"
     }

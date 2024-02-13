@@ -12,11 +12,11 @@ typealias HTTPHeaders = [String: String]
 
 final class NetworkManager {
     
-    //MARK: Properties
+    // MARK: Properties
     static let sharedInstance = NetworkManager()
     private let session: any URLSessionProtocol
     
-    //MARK: Initializers
+    // MARK: Initializers
     init(session: some URLSessionProtocol) {
         self.session = session
     }
@@ -64,7 +64,7 @@ final class NetworkManager {
     }
 }
 
-//MARK: Helpers
+// MARK: Helpers
 extension NetworkManager {
     private static func initializeSession()-> some URLSessionProtocol {
         let configuration = URLSessionConfiguration.default
@@ -103,7 +103,7 @@ extension NetworkManager {
 }
 
 
-//MARK: - HttpClient Protocol
+// MARK: - HttpClient Protocol
 extension NetworkManager: HttpClient {
     func request(
         _ url: String,

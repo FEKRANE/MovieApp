@@ -26,7 +26,6 @@ extension NavigationRouter: Router {
         navigationController.setViewControllers([vc], animated: true)
     }
     
-    
     func redirect(to viewController: UIViewController, animated: Bool) {
         navigationController.pushViewController(
             viewController,

@@ -12,7 +12,6 @@ extension MoviesSection: MovieListDisplayLogic {
     func displayMovies(viewModel: MovieList.ViewModel) {
         self.viewModel.movies = viewModel.movies
     }
-    
     func fetchMovies() {
         let request = MovieList.Request(movieCategory: categorie)
         interactor?.fetchMovies(request: request)
@@ -22,7 +21,7 @@ extension MoviesSection: MovieListDisplayLogic {
 struct MoviesSection: View {
     let categorie: MovieCategory
     var interactor: (any MovieListBusinessLogic)?
-    @ObservedObject var viewModel : MovieList.ViewModel
+    @ObservedObject var viewModel: MovieList.ViewModel
 
     var body: some View {
         Group {
@@ -40,7 +39,6 @@ struct MoviesSection: View {
         }
     }
 }
-
 
 #Preview {
     MoviesSection(categorie: .topRatedMovies, viewModel: .init())

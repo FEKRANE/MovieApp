@@ -51,7 +51,7 @@ final class URLSessionProtocolTests: XCTestCase {
         
         let dataTask = sut.makeDataTask(
             with: urlRequest,
-            completionHandler: { _,_,_ in expectation.fulfill() }
+            completionHandler: { _, _, _ in expectation.fulfill() }
         )
         
         dataTask.cancel()

@@ -24,7 +24,7 @@ final class RefreshTokenService: TokenProvider {
         }
     }
     
-    //MARK: Properties
+    // MARK: Properties
     private let apiManager: any HttpClient
     private let token = BehaviorSubject<String>(value: APIConfiguration.refreshToken.apiKey)
     private let disposeBag = DisposeBag()
@@ -34,7 +34,7 @@ final class RefreshTokenService: TokenProvider {
         "Authorization": "Bearer \(APIConfiguration.refreshToken.apiKey)"
     ]
     
-    //MARK: Initializers
+    // MARK: Initializers
     init(apiManager: HttpClient = NetworkManager.sharedInstance) {
         self.apiManager = apiManager
         Observable<Int>.interval(.seconds(refreshThreshold), scheduler: MainScheduler.instance)
