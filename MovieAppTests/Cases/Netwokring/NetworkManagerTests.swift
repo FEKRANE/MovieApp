@@ -14,10 +14,11 @@ final class NetworkManagerTests: XCTestCase {
     
     var sut: NetworkManager!
     var urlSessionMock: MockURLSession!
-    var url: URL { URL(string: "https://test.com")! }
+    var url: String { "https://test.com" }
     var header: [String:String] { ["Authorization": "Bearer TOKEN"] }
     var testScheduler: TestScheduler!
     var disposeBag: DisposeBag!
+    var testObserver: TestableObserver<Data>!
     
     override func setUp() {
         super.setUp()
@@ -25,7 +26,7 @@ final class NetworkManagerTests: XCTestCase {
         sut = NetworkManager(session: urlSessionMock)
         testScheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
-        
+        testObserver = testScheduler.createObserver(Data.self)
     }
 
     override func tearDown() {
@@ -33,48 +34,28 @@ final class NetworkManagerTests: XCTestCase {
         sut = nil
         testScheduler = nil
         disposeBag = nil
+        testObserver = nil
         super.tearDown()
     }
-    
-    func test_request_setCorrectURL() {
-        let testObserver = testScheduler.createObserver(Data.self)
-        sut.request(
-            url.absoluteString,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: nil
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
         
-        XCTAssertEqual(urlSessionMock.task.originalRequest?.url, url)
+    func test_request_setCorrectURL() {
+        // given
+        let expectedURL = URL(string: url)
+       
+        // when
+        whenBuildRequest(url: url)
+        
+        // then
+        XCTAssertEqual(urlSessionMock.task.originalRequest?.url, expectedURL)
     }
     
     func test_request_setCorrectHeader() {
-        let testObserver = testScheduler.createObserver(Data.self)
-        sut.request(
-            url.absoluteString,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: header
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
-        
+        whenBuildRequest(url: url, headers: header)
         XCTAssertEqual(urlSessionMock.task.originalRequest?.allHTTPHeaderFields, header)
     }
     
     func test_request_calledResume() {
-        let testObserver = testScheduler.createObserver(Data.self)
-        sut.request(
-            url.absoluteString,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: header
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
-        
+        whenBuildRequest(url: url)
         XCTAssertTrue(urlSessionMock.task.calledResume)
     }
     
@@ -83,17 +64,9 @@ final class NetworkManagerTests: XCTestCase {
             "page": "1",
             "offset": "0"
         ]
-        let testObserver = testScheduler.createObserver(Data.self)
-        
-        sut.request(
-            url.absoluteString,
-            queryParams: expectedParams,
-            httpMethod: .get,
-            headers: nil
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
-        
+
+        whenBuildRequest(url: url, queryParams: expectedParams)
+       
         let urlrequest = urlSessionMock.task.originalRequest
         let resultUrl = try XCTUnwrap(urlrequest?.url)
 
@@ -113,16 +86,8 @@ final class NetworkManagerTests: XCTestCase {
     func test_request_givenInvalidURL_shouldFailWithError() {
         let invalidURL = "//:invalid url"
         let expectedError: NetworkError = .invalidURL(url: invalidURL)
-        let testObserver = testScheduler.createObserver(Data.self)
-        
-        sut.request(
-            invalidURL,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: nil
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
+      
+        whenBuildRequest(url: invalidURL)
         
         XCTAssertEqual(testObserver.events, [.error(0, expectedError)])
         
@@ -130,19 +95,10 @@ final class NetworkManagerTests: XCTestCase {
     
     func test_request_givenError_shouldFail() {
         let expectedError: NetworkError = .requestFailed
-        let testObserver = testScheduler.createObserver(Data.self)
         let error = NSError(domain: "com.MovieApp",
                                         code: 42)
-        sut.request(
-            url.absoluteString,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: nil
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
         
-        
+        whenBuildRequest(url: url)
         urlSessionMock.completionHandler(nil, nil, error)
         
         XCTAssertEqual(testObserver.events, [.error(0, expectedError)])
@@ -151,18 +107,8 @@ final class NetworkManagerTests: XCTestCase {
     
     func test_request_givenResponseStatusCode500_shouldFail() {
         let expectedError: NetworkError = .invalidResponse
-        let testObserver = testScheduler.createObserver(Data.self)
     
-        sut.request(
-            url.absoluteString,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: nil
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
-        
-        
+        whenBuildRequest(url: url)
         urlSessionMock.completionHandler(nil, response(statusCode: 500), nil)
         
         XCTAssertEqual(testObserver.events, [.error(0, expectedError)])
@@ -171,18 +117,8 @@ final class NetworkManagerTests: XCTestCase {
     
     func test_request_givenResponseStatusCode401_shouldFail() {
         let expectedError: NetworkError = .tokenExpired
-        let testObserver = testScheduler.createObserver(Data.self)
         
-        sut.request(
-            url.absoluteString,
-            queryParams: nil,
-            httpMethod: .get,
-            headers: nil
-        ).asObservable()
-            .subscribe(testObserver)
-            .disposed(by: disposeBag)
-        
-        
+        whenBuildRequest(url: url)
         urlSessionMock.completionHandler(nil, response(statusCode: 401), nil)
         
         XCTAssertEqual(testObserver.events, [.error(0, expectedError)])
@@ -190,7 +126,22 @@ final class NetworkManagerTests: XCTestCase {
     } 
     
     private func response(statusCode: Int) -> HTTPURLResponse? {
-        HTTPURLResponse(url: url,
+        HTTPURLResponse(url: URL(string: url)!,
                         statusCode: statusCode, httpVersion: nil, headerFields: nil)
+    }
+    
+    private func whenBuildRequest(
+        url: String,
+        queryParams: [String: String]? = nil,
+        headers: HTTPHeaders? = nil
+    ) {
+        sut.request(
+            url,
+            queryParams: queryParams,
+            httpMethod: .get,
+            headers: headers
+        ).asObservable()
+            .subscribe(testObserver)
+            .disposed(by: disposeBag)
     }
 }
