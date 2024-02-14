@@ -48,6 +48,28 @@ extension NetworkError {
     }
 }
 
+extension NetworkError: Equatable {
+    static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
+        switch (lhs, rhs) {
+        case (.requestFailed, .requestFailed),
+            (.invalidResponse, .invalidResponse),
+            (.tokenExpired, .tokenExpired),
+            (.unexpected, .unexpected):
+            return true
+        case let (.invalidStatusCode(code1), .invalidStatusCode(code2)):
+            return code1 == code2
+        case let (.invalidURL(url1), .invalidURL(url2)):
+            return url1 == url2
+        case let (.decodingFailed(error1), .decodingFailed(error2)):
+            return "\(error1)" == "\(error2)"
+        case let (.customApiError(message1), .customApiError(message2)):
+            return message1 == message2
+        default:
+            return false
+        }
+    }
+}
+
 enum MovieCategory: CaseIterable {
     case topRatedMovies
     case popular

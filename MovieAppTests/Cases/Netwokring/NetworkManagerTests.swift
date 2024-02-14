@@ -18,7 +18,6 @@ final class NetworkManagerTests: XCTestCase {
     var header: [String:String] { ["Authorization": "Bearer TOKEN"] }
     var testScheduler: TestScheduler!
     var disposeBag: DisposeBag!
-    var test : DispatchTime!
     
     override func setUp() {
         super.setUp()
