@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol URLSessionProtocol {
+protocol URLSessionProtocol: AnyObject {
     typealias DataTaskResult = (Data?, URLResponse?, Error?) -> Void
     func makeDataTask(
         with request: URLRequest,

@@ -14,7 +14,7 @@ final class NetworkManager {
     
     // MARK: Properties
     static let sharedInstance = NetworkManager()
-    private let session: any URLSessionProtocol
+    let session: any URLSessionProtocol
     
     // MARK: Initializers
     init(session: some URLSessionProtocol) {

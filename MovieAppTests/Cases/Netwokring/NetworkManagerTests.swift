@@ -37,7 +37,11 @@ final class NetworkManagerTests: XCTestCase {
         testObserver = nil
         super.tearDown()
     }
-        
+    
+    func test_init_sets_session() {
+        XCTAssertTrue(sut.session === urlSessionMock)
+    }
+    
     func test_request_setCorrectURL() {
         // given
         let expectedURL = URL(string: url)
@@ -125,6 +129,16 @@ final class NetworkManagerTests: XCTestCase {
         
     } 
     
+     func test_request_givenResponseStatusCode200_shouldReturnData() throws {
+        
+         let expectedData = try Datafrom(fileName: "GET_Movie_Response")
+         
+        whenBuildRequest(url: url)
+        urlSessionMock.completionHandler(expectedData, response(statusCode: 200), nil)
+        
+         XCTAssertEqual(testObserver.events, [.next(0, expectedData), .completed(0)])
+    }
+    
     private func response(statusCode: Int) -> HTTPURLResponse? {
         HTTPURLResponse(url: URL(string: url)!,
                         statusCode: statusCode, httpVersion: nil, headerFields: nil)
@@ -143,5 +157,14 @@ final class NetworkManagerTests: XCTestCase {
         ).asObservable()
             .subscribe(testObserver)
             .disposed(by: disposeBag)
+    }
+    
+    private func Datafrom(fileName: String,
+                          line: UInt = #line) throws -> Data {
+        
+        let bundle = Bundle(for: type(of: self))
+        let url = try XCTUnwrap(bundle.url(forResource: fileName, withExtension: "json"),
+                                "Unable to find \(fileName).json. Did you add it to the tests?", line: line)
+        return try Data(contentsOf: url)
     }
 }
