@@ -14,39 +14,36 @@ protocol TokenProvider {
 
 final class RefreshTokenService: TokenProvider {
     
-    private struct AccessToken: Decodable {
-        let accessToken: String
+    struct AccessToken: Codable {
+        let guestSessionId: String
         let expiresAt: Date
-        
-        enum CodingKeys: String, CodingKey {
-            case accessToken = "guest_session_id"
-            case expiresAt = "expires_at"
-        }
     }
+    
+    
     
     // MARK: Properties
     private let apiManager: any HttpClient
     private let token = BehaviorSubject<String>(value: APIConfiguration.refreshToken.apiKey)
     private let disposeBag = DisposeBag()
-    private let refreshThreshold: Int = 120
+    let refreshThreshold: Int = 120
     private let headers = [
         "accept": "application/json",
         "Authorization": "Bearer \(APIConfiguration.refreshToken.apiKey)"
     ]
     
     // MARK: Initializers
-    init(apiManager: HttpClient = NetworkManager.sharedInstance) {
+    init(apiManager: HttpClient = NetworkManager.sharedInstance, scheduler: SchedulerType = MainScheduler.instance) {
         self.apiManager = apiManager
-        Observable<Int>.interval(.seconds(refreshThreshold), scheduler: MainScheduler.instance)
+        Observable<Int>.interval(.seconds(refreshThreshold), scheduler: scheduler)
             .flatMapLatest { [headers] _ -> Single<AccessToken> in
                 let url = APIConfiguration.refreshToken.endpoint
-                return apiManager.request(url, headers: headers)
+                return self.apiManager.request(url, headers: headers)
                     .map(GenericObjectMapper.map)
                     .retry(3)
             }
             .subscribe(
                 onNext: { [weak self] accessToken in
-                    self?.token.onNext(accessToken.accessToken)
+                    self?.token.onNext(accessToken.guestSessionId)
                 },
                 onError: { error in
                     //TODO: Log error

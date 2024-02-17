@@ -131,7 +131,7 @@ final class NetworkManagerTests: XCTestCase {
     
      func test_request_givenResponseStatusCode200_shouldReturnData() throws {
         
-         let expectedData = try Datafrom(fileName: "GET_Movie_Response")
+         let expectedData = try Data.fromJSON(fileName: "GET_Movie_Response")
          
         whenBuildRequest(url: url)
         urlSessionMock.completionHandler(expectedData, response(statusCode: 200), nil)
@@ -157,14 +157,5 @@ final class NetworkManagerTests: XCTestCase {
         ).asObservable()
             .subscribe(testObserver)
             .disposed(by: disposeBag)
-    }
-    
-    private func Datafrom(fileName: String,
-                          line: UInt = #line) throws -> Data {
-        
-        let bundle = Bundle(for: type(of: self))
-        let url = try XCTUnwrap(bundle.url(forResource: fileName, withExtension: "json"),
-                                "Unable to find \(fileName).json. Did you add it to the tests?", line: line)
-        return try Data(contentsOf: url)
     }
 }
