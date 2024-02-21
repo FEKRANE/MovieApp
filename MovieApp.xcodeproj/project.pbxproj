@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2003674E2B4AE6BA00862E66 /* TopRatedCarouselConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2003674D2B4AE6BA00862E66 /* TopRatedCarouselConfigurator.swift */; };
 		200367512B4F54F400862E66 /* MoviesSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200367502B4F54F400862E66 /* MoviesSectionConfigurator.swift */; };
+		2009D8BF2B83C33500918D1E /* MovieListWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D8BE2B83C33500918D1E /* MovieListWorkerTests.swift */; };
+		2009D8C12B84BA3200918D1E /* SpyNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D8C02B84BA3200918D1E /* SpyNetworkManager.swift */; };
+		2009D8C42B850B2700918D1E /* TokenProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D8C32B850B2700918D1E /* TokenProviderStub.swift */; };
 		202DB1EE2B27739E003913BE /* TopRatedCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202DB1ED2B27739E003913BE /* TopRatedCarousel.swift */; };
 		203C783F2B2B64DF000C7521 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C783E2B2B64DF000C7521 /* Carousel.swift */; };
 		203C78412B2C4D19000C7521 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203C78402B2C4D19000C7521 /* Colors.xcassets */; };
@@ -79,6 +82,9 @@
 /* Begin PBXFileReference section */
 		2003674D2B4AE6BA00862E66 /* TopRatedCarouselConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedCarouselConfigurator.swift; sourceTree = "<group>"; };
 		200367502B4F54F400862E66 /* MoviesSectionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesSectionConfigurator.swift; sourceTree = "<group>"; };
+		2009D8BE2B83C33500918D1E /* MovieListWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovieListWorkerTests.swift; path = MovieAppTests/TestTypes/MovieListWorkerTests.swift; sourceTree = SOURCE_ROOT; };
+		2009D8C02B84BA3200918D1E /* SpyNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyNetworkManager.swift; sourceTree = "<group>"; };
+		2009D8C32B850B2700918D1E /* TokenProviderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderStub.swift; sourceTree = "<group>"; };
 		202DB1ED2B27739E003913BE /* TopRatedCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedCarousel.swift; sourceTree = "<group>"; };
 		203C783E2B2B64DF000C7521 /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		203C78402B2C4D19000C7521 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -174,6 +180,30 @@
 			path = Configurator;
 			sourceTree = "<group>";
 		};
+		2009D8BC2B83C30800918D1E /* MovieListTests */ = {
+			isa = PBXGroup;
+			children = (
+				2009D8BD2B83C31E00918D1E /* MovieListWorkerTests */,
+			);
+			path = MovieListTests;
+			sourceTree = "<group>";
+		};
+		2009D8BD2B83C31E00918D1E /* MovieListWorkerTests */ = {
+			isa = PBXGroup;
+			children = (
+				2009D8BE2B83C33500918D1E /* MovieListWorkerTests.swift */,
+			);
+			path = MovieListWorkerTests;
+			sourceTree = "<group>";
+		};
+		2009D8C22B84BC5100918D1E /* TokenProviderStub */ = {
+			isa = PBXGroup;
+			children = (
+				2009D8C32B850B2700918D1E /* TokenProviderStub.swift */,
+			);
+			path = TokenProviderStub;
+			sourceTree = "<group>";
+		};
 		203C78352B2B4630000C7521 /* MovieCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,12 +245,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		206361EF2B7D274300AEED44 /* Extensions */ = {
+		206361EF2B7D274300AEED44 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				206361F02B7D276100AEED44 /* Data+JSON.swift */,
 			);
-			path = Extensions;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		206361F22B7D764200AEED44 /* RefreshToken */ = {
@@ -234,6 +264,7 @@
 		209BEC2F2B7840AA00AB7B88 /* Cases */ = {
 			isa = PBXGroup;
 			children = (
+				2009D8BC2B83C30800918D1E /* MovieListTests */,
 				206361F22B7D764200AEED44 /* RefreshToken */,
 				209BEC4E2B7BD73300AB7B88 /* Mapping */,
 				209BEC312B7840BA00AB7B88 /* Netwokring */,
@@ -263,8 +294,8 @@
 		209BEC352B793F8800AB7B88 /* TestTypes */ = {
 			isa = PBXGroup;
 			children = (
-				206361EF2B7D274300AEED44 /* Extensions */,
-				209BEC3C2B7A696900AB7B88 /* Mocks */,
+				206361EF2B7D274300AEED44 /* Extension */,
+				209BEC3C2B7A696900AB7B88 /* Mock */,
 			);
 			path = TestTypes;
 			sourceTree = "<group>";
@@ -277,13 +308,14 @@
 			path = MockURLSession;
 			sourceTree = "<group>";
 		};
-		209BEC3C2B7A696900AB7B88 /* Mocks */ = {
+		209BEC3C2B7A696900AB7B88 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
-				20D4ADDF2B7E72D50044BDFE /* NetworkManagerStub */,
+				2009D8C22B84BC5100918D1E /* TokenProviderStub */,
+				20D4ADDF2B7E72D50044BDFE /* NetworkManager */,
 				209BEC362B79400300AB7B88 /* MockURLSession */,
 			);
-			path = Mocks;
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		209BEC4E2B7BD73300AB7B88 /* Mapping */ = {
@@ -426,12 +458,13 @@
 			path = "UI Components";
 			sourceTree = "<group>";
 		};
-		20D4ADDF2B7E72D50044BDFE /* NetworkManagerStub */ = {
+		20D4ADDF2B7E72D50044BDFE /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
 				20D4ADE22B7E73090044BDFE /* NetworkManagerStub.swift */,
+				2009D8C02B84BA3200918D1E /* SpyNetworkManager.swift */,
 			);
-			path = NetworkManagerStub;
+			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 		20F43F7F2B569A93002434FC /* Helper */ = {
@@ -825,10 +858,13 @@
 			files = (
 				209BEC382B79405300AB7B88 /* MockURLSession.swift in Sources */,
 				20D4ADDE2B7E6B220044BDFE /* RefreshTokenServiceTests.swift in Sources */,
+				2009D8C42B850B2700918D1E /* TokenProviderStub.swift in Sources */,
 				206361F12B7D276100AEED44 /* Data+JSON.swift in Sources */,
 				209BEC502B7BD75800AB7B88 /* GenericObjectMapperTests.swift in Sources */,
 				209BEC332B78417000AB7B88 /* NetworkManagerTests.swift in Sources */,
+				2009D8C12B84BA3200918D1E /* SpyNetworkManager.swift in Sources */,
 				209BEC2D2B77F0DA00AB7B88 /* URLSessionProtocolTests.swift in Sources */,
+				2009D8BF2B83C33500918D1E /* MovieListWorkerTests.swift in Sources */,
 				20D4ADE32B7E73090044BDFE /* NetworkManagerStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

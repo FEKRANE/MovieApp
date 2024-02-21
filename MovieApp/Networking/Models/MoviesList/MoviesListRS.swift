@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieListResponse: Decodable {
+struct MovieListResponse: Decodable, Equatable {
     let page: Int
     let results: [Movie]
     let totalPages: Int
@@ -27,5 +27,12 @@ struct MovieListResponse: Decodable {
             lhs.releaseDate == rhs.releaseDate &&
             lhs.title == rhs.title
         }
+    }
+    
+    static func == (lhs: MovieListResponse, rhs: MovieListResponse) -> Bool {
+        return lhs.page == rhs.page &&
+        lhs.results == rhs.results &&
+        lhs.totalPages == rhs.totalPages &&
+        lhs.totalResults == rhs.totalResults
     }
 }

@@ -14,25 +14,27 @@ protocol MovieListWorkerProtocol {
 
 final class MovieListWorker {
    
-    private let httpClient: any HttpClient
     private let tokenProvider: any TokenProvider
     private let disposeBag = DisposeBag()
-
+    var responseProvider: (MovieListRequest, String, HTTPHeaders) -> Single<MovieListResponse>
+    
     init(httpClient: some HttpClient = NetworkManager.sharedInstance, tokenProvider: some TokenProvider = RefreshTokenService()) {
-        self.httpClient = httpClient
         self.tokenProvider = tokenProvider
+        responseProvider = { request, url, header in
+            httpClient.request(
+                 url,
+                 queryParams: request.asDictionary(),
+                 headers: header
+             ).map(GenericObjectMapper.map)
+        }
     }
     
     private func retrieveMovies(request: MovieListRequest, endpoint: String) -> Single<MovieListResponse> {
          tokenProvider
             .tokenObservable()
             .map { [ "Authorization": "Bearer \($0)"] }
-            .flatMap { [httpClient] headers -> Single<MovieListResponse> in
-               return httpClient.request(
-                    endpoint,
-                    queryParams: request.asDictionary(),
-                    headers: headers
-                ).map(GenericObjectMapper.map)
+            .flatMap { headers in
+                self.responseProvider(request, endpoint, headers)
             }.asSingle()
     }
 }
@@ -45,7 +47,7 @@ extension MovieListWorker: MovieListWorkerProtocol {
         case .topRatedMovies:
             APIConfiguration.topRatedMovies.endpoint
         case .upcoming:
-            APIConfiguration.upcommingMovies.endpoint
+            APIConfiguration.upcomingMovies.endpoint
         }
         retrieveMovies(request: request, endpoint: endpoint)
             .subscribe(

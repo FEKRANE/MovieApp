@@ -9,8 +9,8 @@
 import Foundation
 import RxSwift
 
-class NetworkManagerStub: HttpClient {
-
+final class NetworkManagerStub: HttpClient {
+    
     typealias Token = RefreshTokenService.AccessToken
     
     var token: String?
@@ -38,7 +38,7 @@ class NetworkManagerStub: HttpClient {
             }
             
             let accessToken = Token(guestSessionId: token!, expiresAt: Date())
-           
+            
             if let data = try? dataFrom(token: accessToken) {
                 single(.success(data))
             } else {

@@ -36,7 +36,7 @@ final class RefreshTokenServiceTests: XCTestCase {
     }
     
 
-    func test_tokenObservable_beforThreshold_EmitsApiKey() {
+    func test_tokenObservable_beforeThreshold_EmitsApiKey() {
         let testObserver = testScheduler.createObserver(String.self)
         let expectedToken = APIConfiguration.refreshToken.apiKey
         

@@ -74,15 +74,15 @@ final class NetworkManagerTests: XCTestCase {
         let urlrequest = urlSessionMock.task.originalRequest
         let resultUrl = try XCTUnwrap(urlrequest?.url)
 
-        let queryParms = URLComponents(
+        let queryParams = URLComponents(
             url: resultUrl,
             resolvingAgainstBaseURL: false
         )?.queryItems
         
-        XCTAssertEqual(queryParms?.count,expectedParams.count, "Query items count mismatch")
+        XCTAssertEqual(queryParams?.count,expectedParams.count, "Query items count mismatch")
         
         for (key, value) in expectedParams {
-            XCTAssertTrue(queryParms?.contains(where: { $0.name == key && $0.value == value }) ?? false, "\(key)=\(value) not found in query items")
+            XCTAssertTrue(queryParams?.contains(where: { $0.name == key && $0.value == value }) ?? false, "\(key)=\(value) not found in query items")
         }
         
     }
