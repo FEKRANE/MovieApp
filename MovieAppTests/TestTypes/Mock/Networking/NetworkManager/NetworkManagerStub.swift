@@ -15,15 +15,7 @@ final class NetworkManagerStub: HttpClient {
     
     var token: String?
     var error: NetworkError?
-    
-    func retrieve() throws -> String? {
-        if let error  {
-            throw error
-        } else {
-            return token
-        }
-    }
-    
+
     func request(
         _ url: String,
         queryParams: [String : String]?,

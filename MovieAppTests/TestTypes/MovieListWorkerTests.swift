@@ -60,8 +60,7 @@ final class MovieListWorkerTests: XCTestCase {
     }
 
     func test_getMovieList_givenSuccessResponse_shouldReturnMovieList() {
-        let movie = MovieListResponse.Movie(id: 1, originalTitle: "test", posterPath: "poster", releaseDate: "01/02/2024", title: "test")
-        let expectedResponse = MovieListResponse(page: 1, results: [movie], totalPages: 1, totalResults: 1)
+        let expectedResponse = MovieListResponse.fixture()
 
         sut.responseProvider = { _, _, _ in
             Single.just(expectedResponse)

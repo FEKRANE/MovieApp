@@ -31,7 +31,7 @@ extension MovieListInteractor: MovieListBusinessLogic {
                 let response = MovieList.Response(movieList: data)
                 self?.presenter?.showMovies(response)
             case .failure(let error):
-                self?.presenter?.showError(error.localizedDescription)
+                self?.presenter?.showError(error.description)
             }
         }
     }
